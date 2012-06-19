@@ -19,27 +19,14 @@ from basic_models import admin as basic_admin
 from emailtemplates.models import *
 
 
-class RequiredContextItemInline(admin.TabularInline):
-    model = RequiredContextItem
-    extra = 1
-
-
-class ModelTemplateAdmin(basic_admin.DefaultModelAdmin):
-    list_display = ('name', 'slug')
-    search_fields = ('name', 'slug', 'body')
-    fieldsets = (
-        (None, {'fields': ('name', 'slug', 'body')}),
-    )
-    inlines = (RequiredContextItemInline,)
-#admin.site.register(ModelTemplate, ModelTemplateAdmin)
-
 
 class EmailTemplateAdmin(basic_admin.DefaultModelAdmin):
     list_display = ('name', 'slug', 'subject', 'visible_from_address')
     search_fields = ('name', 'slug', 'subject', 'from_address', 'body')
     fieldsets = (
         (None, {'fields': ('name', 'slug', 'from_address')}),
-        ('Body', {'fields': ('subject', 'body', 'txt_body')}),
+        ('Email', {'fields': ('subject', 'body',)}),
+        ('Advanced', {'classes': ('',), 'fields': ('base_template','txt_body')})
     )
-    inlines = (RequiredContextItemInline,)
+    prepopulated_fields = {'slug': ('name',)}
 admin.site.register(EmailTemplate, EmailTemplateAdmin)
