@@ -74,5 +74,5 @@ class EmailTemplate(basic_models.SlugModel):
     @staticmethod
     def send_template(slug, to_address, context={}, attachments=None, headers=None):
         from emailtemplates.utils import send_email_template
-        return send_email_template(to_address, context=context, attachments=attachments, headers=headers)
+        return send_email_template(slug, to_address, context=context, attachments=attachments, headers=headers)
 
