@@ -47,6 +47,7 @@ class EmailTemplate(basic_models.SlugModel):
             return self.from_address
         site = Site.objects.get_current()
         if site.name:
+            # This is causing a BotoServerError: 'Domain contains illegal character'
             return '%s <no-reply@%s>' % (site.name, site.domain)
         else:
             return 'no-reply@%s' % site.domain
